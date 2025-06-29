@@ -1,0 +1,35 @@
+# Reusable workflow for deleting old container versions
+name: Delete Container Versions
+
+on:
+  workflow_call:
+    inputs:
+      package_name:
+        required: true
+        type: string
+      package_type:
+        required: true
+        type: string
+      min_versions_to_keep:
+        required: false
+        type: number
+        default: 5
+      delete_untagged:
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  delete_versions:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Delete old container versions
+        uses: actions/delete-package-versions@v4.1.1
+        with:
+          delete-only-untagged-versions: ${{ inputs.delete_untagged }}
+          min-versions-to-keep: ${{ inputs.min_versions_to_keep }}
+          package-name: ${{ inputs.package_name }}
+          package-type: ${{ inputs.package_type }}
+          token: ${{ secrets.GITHUB_TOKEN }}

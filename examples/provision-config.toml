@@ -1,0 +1,40 @@
+# Kohya SS Model Provisioning Configuration
+#
+# This configuration file demonstrates how to provision models for Kohya SS.
+# Place this file on a web server and use PROVISION_URL=https://your-server.com/config.toml
+# to automatically download models during container startup.
+
+# Example: Download a Stable Diffusion base model for training
+[models.checkpoints.sd15_base]
+source = "huggingface"
+repo = "runwayml/stable-diffusion-v1-5"
+file = "v1-5-pruned.safetensors"
+description = "Stable Diffusion 1.5 base model for training"
+
+# Example: Download a SDXL base model for training
+[models.checkpoints.sdxl_base]
+source = "huggingface"
+repo = "stabilityai/stable-diffusion-xl-base-1.0"
+file = "sd_xl_base_1.0.safetensors"
+description = "SDXL base model for training"
+
+# Example: Download a VAE
+[models.vae.sdxl_vae]
+source = "huggingface"
+repo = "madebyollin/sdxl-vae-fp16-fix"
+file = "sdxl_vae.safetensors"
+description = "SDXL VAE (fp16 fixed)"
+
+# Example: Download text encoders for FLUX training
+[models.text_encoder.clip_l]
+source = "huggingface"
+repo = "comfyanonymous/flux_text_encoders"
+file = "clip_l.safetensors"
+description = "CLIP-L text encoder for FLUX"
+
+# Example: Download from CivitAI (requires CIVITAI_TOKEN)
+[models.lora.example_lora]
+source = "civitai"
+model_id = "12345"
+version_id = "67890"
+description = "Example LoRA from CivitAI"

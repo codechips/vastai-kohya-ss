@@ -1,0 +1,17 @@
+# Cleanup workflow for managing Docker registry storage
+name: Cleanup
+
+on:
+  schedule:
+    # Run weekly on Sundays at 02:00 UTC
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+
+jobs:
+  cleanup-registry:
+    uses: ./.github/workflows/delete-container-versions.yml
+    with:
+      package_name: vastai-kohya-ss
+      package_type: container
+      min_versions_to_keep: 5
+      delete_untagged: true
