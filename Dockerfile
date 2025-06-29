@@ -14,21 +14,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NVIDIA_VISIBLE_DEVICES=all \
     NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
-# Install system dependencies and Python 3.11
+# Install system dependencies (uv will handle Python installation)
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
-    # Install runtime dependencies
     apt-get install -y --no-install-recommends \
     curl \
     git \
     build-essential \
-    python3.11 \
-    python3.11-dev \
-    python3.11-venv \
-    python3-pip \
     libgl1 \
     libglib2.0-0 \
     libgomp1 \
