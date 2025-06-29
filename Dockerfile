@@ -123,8 +123,8 @@ COPY scripts/provision/ /opt/provision/
 # Copy HTML templates
 COPY config/nginx/html/ /opt/nginx/html/
 
-# Copy provision configurations
-COPY config/provision/ /opt/config/provision/
+# Create provision config directory
+RUN mkdir -p /opt/config/provision/
 
 # Configure filebrowser and set permissions
 RUN chmod +x /opt/bin/start.sh /opt/bin/services/*.sh /opt/provision/provision.py && \
