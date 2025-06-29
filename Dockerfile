@@ -1,5 +1,5 @@
 # Stage 1: Base with CUDA 12.8
-FROM nvidia/cuda:12.2.2-base-ubuntu22.04
+FROM nvidia/cuda:12.8-runtime-ubuntu22.04
 
 # Build arguments
 ARG DEBIAN_FRONTEND=noninteractive
@@ -20,41 +20,24 @@ RUN apt-get update && \
     curl \
     git \
     build-essential \
-    libgl1 \
-    libglib2.0-0 \
-    libgomp1 \
-    libglfw3 \
-    libgles2 \
     libtcmalloc-minimal4 \
-    bc \
     nginx-light \
+    # Additional dependencies for container services
+    bc \
+    # User tools for debugging and management
     tmux \
-    tree \
     nano \
     vim \
     htop \
-    # Additional dependencies for Kohya SS
-    ffmpeg \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
-    libglib2.0-0 \
-    libgomp1 \
-    # CUDA compiler needed for some packages
-    cuda-nvcc-12-2 \
-    # For TensorRT compatibility
-    libnvinfer8 \
-    libnvinfer-plugin8 \
-    # 7zip for archive extraction
-    p7zip-full \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    # Create python3 symlink for Python 3.11
-    && ln -sf /usr/bin/python3.11 /usr/bin/python3 \
-    && ln -sf /usr/bin/python3.11 /usr/bin/python \
-    # Install uv for fast package management
-    && curl -LsSf https://astral.sh/uv/install.sh | bash \
-    && mv /root/.local/bin/uv /usr/local/bin/uv
+    tree \
+    libglib2.0-0 && \
+    # Clean up apt cache
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install uv for fast package management
+RUN curl -LsSf https://astral.sh/uv/install.sh | bash && \
+    mv /root/.local/bin/uv /usr/local/bin/uv
 
 # Set CUDA environment
 ENV PATH="/usr/local/cuda/bin${PATH:+:${PATH}}"
