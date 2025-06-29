@@ -1,0 +1,22 @@
+# Hadolint configuration for Kohya SS Docker image
+# Suppresses warnings that don't apply to our ML training use case
+
+ignored:
+  - DL3008  # Pin versions in apt get install
+            # We don't pin package versions for flexibility with ML dependencies
+            # and because Ubuntu package versions change frequently
+  
+  - SC1091  # Not following sourced files
+            # Expected behavior when sourcing virtual environment activation
+            # scripts during Docker build process
+  
+  - SC2015  # A && B || C is not if-then-else
+            # False positive for our chmod commands - they're properly structured
+
+# Output configuration
+format: tty
+no-fail: false
+no-color: false
+
+# Enforce Docker best practices we do care about
+strict-labels: false
