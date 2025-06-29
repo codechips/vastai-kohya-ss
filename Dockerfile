@@ -1,5 +1,5 @@
 # Stage 1: Base with CUDA 12.8
-FROM nvidia/cuda:12.8-runtime-ubuntu22.04
+FROM nvidia/cuda:12.8.0-runtime-ubuntu22.04
 
 # Build arguments
 ARG DEBIAN_FRONTEND=noninteractive
