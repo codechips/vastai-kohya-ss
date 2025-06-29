@@ -86,9 +86,9 @@ RUN if [ "$(uname -m)" = "x86_64" ]; then \
 RUN curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash && \
     mkdir -p /workspace/logs /opt/kohya_ss /root/.config
 
-# Copy Kohya SS from vendor folder
+# Clone Kohya SS repository
 WORKDIR /opt
-COPY vendor/kohya_ss/ kohya_ss/
+RUN git clone https://github.com/bmaltais/kohya_ss.git
 
 # Set up Kohya SS working directory
 WORKDIR /opt/kohya_ss
