@@ -3,7 +3,6 @@ FROM nvidia/cuda:12.2.2-base-ubuntu22.04
 
 # Build arguments
 ARG DEBIAN_FRONTEND=noninteractive
-ARG UID=1000
 
 # Set shell with pipefail for safety
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -109,9 +108,7 @@ RUN apt-get autoremove -y && \
 # Create required directories
 RUN mkdir -p /opt/bin /opt/provision /opt/nginx/html /opt/config
 
-# Create user
-RUN groupadd -g $UID $UID && \
-    useradd -l -u $UID -g $UID -m -s /bin/bash -N $UID
+# Container runs as root for compatibility with various container runtimes
 
 # Copy configuration files and scripts
 COPY config/filebrowser/filebrowser.json /root/.filebrowser.json
